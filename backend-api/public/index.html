@@ -1,193 +1,255 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Craft Realty - Buyer Portal. Browse, favourite, and manage your dream properties.">
-  <title>Craft Realty — Buyer Portal</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-  <div class="bg-gradient"></div>
-
-  <!-- ═══════════════════════════════════
-       AUTH PAGES (Login / Register)
-       ═══════════════════════════════════ -->
-  <div id="auth-page" class="auth-wrapper">
-    <div class="auth-card">
-      <div class="logo">
-        <h1>🏠 Craft Realty</h1>
-        <p>Buyer Portal</p>
-      </div>
-
-      <!-- Login Form -->
-      <div id="login-form-container">
-        <h2>Welcome back</h2>
-        <p class="subtitle">Sign in to your account to continue</p>
-        <form id="login-form" autocomplete="on">
-          <div class="form-group">
-            <label for="login-email">Email Address</label>
-            <input type="email" id="login-email" name="email" placeholder="you@example.com" required autocomplete="email">
-          </div>
-          <div class="form-group">
-            <label for="login-password">Password</label>
-            <input type="password" id="login-password" name="password" placeholder="••••••••" required autocomplete="current-password">
-          </div>
-          <button type="submit" id="login-btn" class="btn btn-primary btn-block">
-            Sign In
-          </button>
-        </form>
-        <p class="auth-footer">
-          Don't have an account? <span class="text-link" id="show-register">Create one</span>
-        </p>
-      </div>
-
-      <!-- Register Form -->
-      <div id="register-form-container" class="hidden">
-        <h2>Create account</h2>
-        <p class="subtitle">Join Craft Realty to start saving your dream homes</p>
-        <form id="register-form" autocomplete="on">
-          <div class="form-group">
-            <label for="register-name">Full Name</label>
-            <input type="text" id="register-name" name="name" placeholder="John Doe" required autocomplete="name">
-          </div>
-          <div class="form-group">
-            <label for="register-email">Email Address</label>
-            <input type="email" id="register-email" name="email" placeholder="you@example.com" required autocomplete="email">
-          </div>
-          <div class="form-group">
-            <label for="register-password">Password</label>
-            <input type="password" id="register-password" name="password" placeholder="Min 6 characters" required minlength="6" autocomplete="new-password">
-          </div>
-          <button type="submit" id="register-btn" class="btn btn-primary btn-block">
-            Create Account
-          </button>
-        </form>
-        <p class="auth-footer">
-          Already have an account? <span class="text-link" id="show-login">Sign in</span>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════
-       DASHBOARD PAGE
-       ═══════════════════════════════════ -->
-  <div id="dashboard-page" class="app-container hidden">
-
-    <!-- Navbar -->
-    <nav class="navbar" id="main-navbar">
-      <span class="navbar-brand">🏠 Craft Realty</span>
-      <div class="navbar-user">
-        <div class="user-info">
-          <div class="user-name" id="nav-user-name">—</div>
-          <div class="user-role" id="nav-user-role">—</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Craft Realty - Buyer Portal. Browse, favourite, and manage your dream properties."
+    />
+    <title>Craft Realty — Buyer Portal</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="bg-gradient"></div>
+    <div id="auth-page" class="auth-wrapper">
+      <div class="auth-card">
+        <div class="logo">
+          <h1>Craft Realty</h1>
+          <p>Buyer Portal</p>
         </div>
-        <div class="avatar" id="nav-avatar">?</div>
-        <button class="btn btn-sm btn-secondary" id="logout-btn">Logout</button>
-      </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="main-content">
-
-      <!-- Dashboard Header -->
-      <div class="dashboard-header">
-        <h1 id="greeting">Welcome back!</h1>
-        <p>Browse properties and manage your favourites</p>
-      </div>
-
-      <!-- Stats Row -->
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-icon purple">🏘️</div>
-          <div>
-            <div class="stat-value" id="stat-total">0</div>
-            <div class="stat-label">Total Properties</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon rose">❤️</div>
-          <div>
-            <div class="stat-value" id="stat-favs">0</div>
-            <div class="stat-label">My Favourites</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon green">👤</div>
-          <div>
-            <div class="stat-value" id="stat-role">—</div>
-            <div class="stat-label">Your Role</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section Tabs -->
-      <div class="section-tabs">
-        <button class="section-tab active" data-tab="all-properties" id="tab-all">All Properties</button>
-        <button class="section-tab" data-tab="my-favourites" id="tab-favs">My Favourites</button>
-        <button class="section-tab" data-tab="add-property" id="tab-add">+ Add Property</button>
-      </div>
-
-      <!-- All Properties Section -->
-      <section id="section-all-properties">
-        <div class="property-grid" id="properties-grid">
-          <!-- Rendered dynamically -->
-        </div>
-        <div class="empty-state hidden" id="empty-properties">
-          <div class="empty-icon">🏗️</div>
-          <h3>No properties yet</h3>
-          <p>Be the first to add a property listing!</p>
-        </div>
-      </section>
-
-      <!-- My Favourites Section -->
-      <section id="section-my-favourites" class="hidden">
-        <div class="property-grid" id="favourites-grid">
-          <!-- Rendered dynamically -->
-        </div>
-        <div class="empty-state hidden" id="empty-favourites">
-          <div class="empty-icon">💔</div>
-          <h3>No favourites yet</h3>
-          <p>Click the heart icon on a property to add it to your favourites.</p>
-        </div>
-      </section>
-
-      <!-- Add Property Section -->
-      <section id="section-add-property" class="hidden">
-        <div class="auth-card" style="max-width: 560px; margin: 0 auto;">
-          <h2>Add New Property</h2>
-          <p class="subtitle">List a new property for buyers to discover</p>
-          <form id="add-property-form">
+        <div id="login-form-container">
+          <h2>Welcome back</h2>
+          <p class="subtitle">Sign in to your account to continue</p>
+          <form id="login-form" autocomplete="on">
             <div class="form-group">
-              <label for="prop-title">Property Title</label>
-              <input type="text" id="prop-title" placeholder="e.g. Modern 3BHK Apartment" required>
+              <label for="login-email">Email Address</label>
+              <input
+                type="email"
+                id="login-email"
+                name="email"
+                placeholder="hello@gmail.com"
+                required
+                autocomplete="email"
+              />
             </div>
             <div class="form-group">
-              <label for="prop-price">Price (USD)</label>
-              <input type="number" id="prop-price" placeholder="e.g. 250000" required min="1">
+              <label for="login-password">Password</label>
+              <input
+                type="password"
+                id="login-password"
+                name="password"
+                placeholder="••••••••"
+                required
+                autocomplete="current-password"
+              />
             </div>
-            <div class="form-group">
-              <label for="prop-location">Location</label>
-              <input type="text" id="prop-location" placeholder="e.g. Downtown, NYC">
-            </div>
-            <div class="form-group">
-              <label for="prop-image">Image URL (optional)</label>
-              <input type="url" id="prop-image" placeholder="https://example.com/photo.jpg">
-            </div>
-            <button type="submit" class="btn btn-primary btn-block" id="add-property-btn">
-              Add Property
+            <button
+              type="submit"
+              id="login-btn"
+              class="btn btn-primary btn-block"
+            >
+              Sign In
             </button>
           </form>
+          <p class="auth-footer">
+            Don't have an account?
+            <span class="text-link" id="show-register">Create one</span>
+          </p>
         </div>
-      </section>
 
-    </main>
-  </div>
+        <div id="register-form-container" class="hidden">
+          <h2>Create account</h2>
+          <p class="subtitle">
+            Join Craft Realty to start saving your dream homes
+          </p>
+          <form id="register-form" autocomplete="on">
+            <div class="form-group">
+              <label for="register-name">Full Name</label>
+              <input
+                type="text"
+                id="register-name"
+                name="name"
+                placeholder="John Doe"
+                required
+                autocomplete="name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="register-email">Email Address</label>
+              <input
+                type="email"
+                id="register-email"
+                name="email"
+                placeholder="you@example.com"
+                required
+                autocomplete="email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="register-password">Password</label>
+              <input
+                type="password"
+                id="register-password"
+                name="password"
+                placeholder="Min 6 characters"
+                required
+                minlength="6"
+                autocomplete="new-password"
+              />
+            </div>
+            <button
+              type="submit"
+              id="register-btn"
+              class="btn btn-primary btn-block"
+            >
+              Create Account
+            </button>
+          </form>
+          <p class="auth-footer">
+            Already have an account?
+            <span class="text-link" id="show-login">Sign in</span>
+          </p>
+        </div>
+      </div>
+    </div>
 
-  <!-- Toast Container -->
-  <div class="toast-container" id="toast-container"></div>
+    <div id="dashboard-page" class="app-container hidden">
+      <nav class="navbar" id="main-navbar">
+        <span class="navbar-brand">🏠 Craft Realty</span>
+        <div class="navbar-user">
+          <div class="user-info">
+            <div class="user-name" id="nav-user-name">—</div>
+            <div class="user-role" id="nav-user-role">—</div>
+          </div>
+          <div class="avatar" id="nav-avatar">?</div>
+          <button class="btn btn-sm btn-secondary" id="logout-btn">
+            Logout
+          </button>
+        </div>
+      </nav>
 
-  <script src="/js/app.js"></script>
-</body>
+      <main class="main-content">
+        <div class="dashboard-header">
+          <h1 id="greeting">Welcome back!</h1>
+          <p>Browse properties and manage your favourites</p>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-icon purple">🏘️</div>
+            <div>
+              <div class="stat-value" id="stat-total">0</div>
+              <div class="stat-label">Total Properties</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon rose">❤️</div>
+            <div>
+              <div class="stat-value" id="stat-favs">0</div>
+              <div class="stat-label">My Favourites</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">👤</div>
+            <div>
+              <div class="stat-value" id="stat-role">—</div>
+              <div class="stat-label">Your Role</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-tabs">
+          <button
+            class="section-tab active"
+            data-tab="all-properties"
+            id="tab-all"
+          >
+            All Properties
+          </button>
+          <button class="section-tab" data-tab="my-favourites" id="tab-favs">
+            My Favourites
+          </button>
+          <button class="section-tab" data-tab="add-property" id="tab-add">
+            + Add Property
+          </button>
+        </div>
+
+        <section id="section-all-properties">
+          <div class="property-grid" id="properties-grid"></div>
+          <div class="empty-state hidden" id="empty-properties">
+            <div class="empty-icon">🏗️</div>
+            <h3>No properties yet</h3>
+            <p>Be the first to add a property listing!</p>
+          </div>
+        </section>
+
+        <section id="section-my-favourites" class="hidden">
+          <div class="property-grid" id="favourites-grid"></div>
+          <div class="empty-state hidden" id="empty-favourites">
+            <div class="empty-icon">💔</div>
+            <h3>No favourites yet</h3>
+            <p>
+              Click the heart icon on a property to add it to your favourites.
+            </p>
+          </div>
+        </section>
+
+        <section id="section-add-property" class="hidden">
+          <div class="auth-card" style="max-width: 560px; margin: 0 auto">
+            <h2>Add New Property</h2>
+            <p class="subtitle">List a new property for buyers to discover</p>
+            <form id="add-property-form">
+              <div class="form-group">
+                <label for="prop-title">Property Title</label>
+                <input
+                  type="text"
+                  id="prop-title"
+                  placeholder="e.g. Modern 3BHK Apartment"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="prop-price">Price (USD)</label>
+                <input
+                  type="number"
+                  id="prop-price"
+                  placeholder="e.g. 250000"
+                  required
+                  min="1"
+                />
+              </div>
+              <div class="form-group">
+                <label for="prop-location">Location</label>
+                <input
+                  type="text"
+                  id="prop-location"
+                  placeholder="e.g. Downtown, NYC"
+                />
+              </div>
+              <div class="form-group">
+                <label for="prop-image">Image URL (optional)</label>
+                <input
+                  type="url"
+                  id="prop-image"
+                  placeholder="https://example.com/photo.jpg"
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary btn-block"
+                id="add-property-btn"
+              >
+                Add Property
+              </button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="/js/app.js"></script>
+  </body>
 </html>
